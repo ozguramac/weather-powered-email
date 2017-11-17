@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Weather Powered Email!">
+    <meta name="author" content="Ozgur V Amac">
+
+    <title>Weather Powered Email</title>
+
+    {% load static %}
+
+    <!-- Bootstrap core CSS -->
+    <link href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+</head>
+
+<body>
+<div class="panel panel-default">
+    <div class="centered panel-body">
+        <form method="POST">{% csrf_token %}
+            Weather Powered Email
+            <hr>
+
+            <label>Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" type="text" required
+                   data-validation-required-message="Please enter your email address!">
+
+            <div class="form-group">
+                <label>Location</label>
+                <select class="form-control" id="location" name="location" required
+                        data-validation-required-message="Please select closest location to you from the list!">
+                    {% for loc in locations %}
+                    <option value="{{ loc.id }}">{{ loc.city }}, {{ loc.state }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg">Subscribe</button>
+        </form>
+
+        {% if error != None %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if message != None %}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+        </div>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

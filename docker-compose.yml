@@ -1,0 +1,36 @@
+version: '3'
+services:
+  app:
+    container_name: app
+    build: .
+    command: python3 /code/manage.py runserver 0.0.0.0:80
+    volumes:
+      - .:/code
+    ports:
+    - "${PORT}:80"
+    environment:
+      DB_HOST: db
+      DB_PSWD: ${DB_PSWD}
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      WUNDERGROUND_API_KEY: ${WUNDERGROUND_API_KEY}
+      EMAIL_HOST: ${SMTP_HOST}
+      EMAIL_PORT: ${SMTP_PORT}
+      EMAIL_USER: ${SMTP_USER}
+      EMAIL_PSWD: ${SMTP_PSWD}
+      EMAIL_USE_TLS: ${SMTP_USE_TLS}
+    depends_on:
+    - db
+  db:
+    container_name: db
+    build: ./db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PSWD}
+#    ports:
+#      - "5432:5432"
+  fakesmtp:
+    container_name: fakesmtp
+    image: munkyboy/fakesmtp
+
