@@ -21,7 +21,7 @@ PORT=80
 DB_NAME=postgres
 DB_USER=???
 DB_PSWD=???
-WUNDERGROUND_API_KEY=???
+WEATHER_API_KEY=???
 SMTP_HOST=fakesmtp
 SMTP_PORT=25
 SMTP_USER=fake
@@ -78,8 +78,8 @@ A. Yes, edit the value for your PORT variable in your .env
 Q. How can I access the database directly?
 A. Uncomment ports portion of db container under docker-compose.yml
 
-Q. How do I obtain a Wunderground API Key?
-A. Follow instructions at [API | Weather Underground](https://www.wunderground.com/weather/api/)
+Q. How do I obtain a Open Weather Map API Key?
+A. Follow instructions at [API | Open Weather Map](http://openweathermap.org/api)
 
 Q. How can I see the emails being fake-sent through Fake SMTP?
 A. Use following docker commands e.g.:

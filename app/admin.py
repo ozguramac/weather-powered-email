@@ -8,31 +8,25 @@ from django.core.mail import send_mail
 
 from .models import User, Location
 
-wak = os.getenv('WUNDERGROUND_API_KEY')
+wak = os.getenv('WEATHER_API_KEY')
 from_email = os.getenv('EMAIL_USER') + '@' + os.getenv('EMAIL_HOST')
 
 def send_weather_emails(modeladmin, request, queryset):
     for user in queryset:
-        loc = Location.objects.get(id=user.location);
+        loc = Location.objects.get(id=user.location)
 
         temp = 72
         weather = 'Sunny'
         temp_avg = 70
         if wak != '':
-            url = 'https://api.wunderground.com/api/{key}/geolookup/conditions/q/{state}/{city}.json' \
-                .format(key=wak, state=loc.state, city=loc.city)
+            url = 'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=imperial&&appid={key}'
+            url.format(key=wak, lat=loc.latitude, lon=loc.longtitude)
             resp = requests.get(url).json()
 
-            temp = resp['current_observation']['temp_f']
-            weather = resp['current_observation']['weather']
+            temp = resp['main']['temp']
+            weather = resp['weather'][0]['main']
 
-            now = datetime.utcnow()
-            date_range = "%s%s" % ((now - timedelta(days=30)).strftime("%m%d"), now.strftime("%m%d"))
-            url = 'https://api.wunderground.com/api/{key}/planner_{date_range}/q/{state}/{city}.json' \
-                .format(key=wak, date_range=date_range, state=loc.state, city=loc.city)
-            resp = requests.get(url).json()
-
-            temp_avg = (int(resp['trip']['temp_high']['avg']['F']) + int(resp['trip']['temp_low']['avg']['F']))/2
+            temp_avg = (int(resp['main']['temp_max']) + int(resp['main']['temp_min']))/2
 
         if weather == 'Clear' or temp_avg + 5 <= temp:
             subject = "It's nice out! Enjoy a discount on us."
