@@ -19,8 +19,8 @@ def send_weather_emails(modeladmin, request, queryset):
         weather = 'Sunny'
         temp_avg = 70
         if wak != '':
-            url = 'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=imperial&&appid={key}'
-            url.format(key=wak, lat=loc.latitude, lon=loc.longtitude)
+            url = 'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=imperial&&appid={key}'\
+                .format(key=wak, lat=loc.latitude, lon=loc.longtitude)
             resp = requests.get(url).json()
 
             temp = resp['main']['temp']
