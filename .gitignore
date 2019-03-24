@@ -98,3 +98,9 @@ ENV/
 *.iml
 out
 gen
+
+# Fake SMTP related
+maildumps
+
+# Docker related
+docker-compose.override.yml

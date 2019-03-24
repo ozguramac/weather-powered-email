@@ -7,5 +7,5 @@ RUN apk add --update \
         musl-dev \
     && rm -rf /var/cache/apk/* \
     && mkdir /code
-ADD . /code/
+ADD requirements.txt /code/
 RUN pip install -r /code/requirements.txt

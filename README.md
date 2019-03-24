@@ -1,105 +1,65 @@
-Klaviyo Weather App
--------------------
+WEATHER POWERED EMAIL
 
-[Spec](https://www.klaviyo.com/weather-app)
+## Download and Installation
 
-Prerequisites
--------------
+To begin development on this site:
+* Setup SSH between your dev local and GitHub account
+* Clone the repo: 
+```
+git clone git@github.com:ozguramac/weather-powered-email.git
+```
+* [Fork, Clone, or Download on GitHub](https://github.com/ozguramac/weather-powered-email)
 
-- Install docker and docker-compose for your local OS env
+### How do I get set up? ###
 
-Automated Testing
------------------
-
-TODO..
-
-Setup & Run
------------
-Add a .env file to the project root with the environment values set e.g. as follows:
+* Install docker/docker-compose
+* Summary of set up: Recommend using Intellij IDEA to build/run.
+* Configuration: docker-compose, python, django, postgres
+* Add .env file to provide env values in docker-compose.yml: 
 ```
 PORT=80
+SECRET=*******************  #<---- GENERATE ONE
+DBG=False  #<----- TURN THIS ON FOR DEV ENV
+HOST=wxmail.derinworksllc.local  #<---- NEED THIS IN PROD
 DB_NAME=postgres
-DB_USER=???
-DB_PSWD=???
-WEATHER_API_KEY=???
-SMTP_HOST=fakesmtp
+DB_USER=postgres
+DB_PSWD=***************  #<----- SET TO GOOD ONE in PROD
+WEATHER_API_KEY=**************  #<--- FROM openweathermap.org/appid
+SMTP_HOST=fakesmtp  #<--- REPLACE THIS WITH A REAL SMTP HOST
 SMTP_PORT=25
 SMTP_USER=fake
 SMTP_PSWD=
 SMTP_USE_TLS=False
 ```
+* How to build: ```docker-compose build```
+* How to run tests: TBD
+* How to run: ```docker-compose up -d```
+* Deployment instructions:
+  - Setup deploy key (read-only SSH) between target VM and GitHub
+  - ```git clone``` for the first time and ```git pull``` from VM
+  - ```cd ./weather-powered-email```
+  - Add a production-ready .env file with production values
+  - ```docker-compose up -d```
 
-and bring up as follows:
-```
-$ docker-compose up -d
-```
+### Manual End User Testing ###
+Launch your favorite browser and goto
+[here](http://wxmail.derinworksllc.local/app)(refer to PORT from .env
+file if different)
 
-and do some first time setup:
-```
-$ docker exec -it app sh
-/# cd code
-/code # python3 manage.py migrate
-Operations to perform:
-  Apply all migrations: admin, auth, contenttypes, sessions
-Running migrations:
-  Applying contenttypes.0001_initial... OK
-  Applying auth.0001_initial... OK
-.
-.
-/code # python3 manage.py createsuperuser
-Username (leave blank to use 'root'):
-.
-.
-.
-```
+### Contribution guidelines ###
 
-Manual End User Testing
------------------------
+* Writing tests
+* Code review
+    - Create PR (pull request) to master branch
+    - Merging PR to master requires code review and approval from teammate.
+* Other guidelines
+    - Create own branch for changes
 
-Launch your favorite browser and goto http://127.0.0.1/app (refer to PORT from .env file if different)
-Go through steps to add email and select a location and hit Subscribe
+### Who do I talk to? ###
 
-Manual Admin Testing
---------------------
+* Repo owner or [admin](mailto:info@derinworksllc.com) 
+* Other community or team contact
 
-Go to http://127.0.0.1/admin/app/user/
-Select all and select "Send Weather-Powered Emails to Users" admin action
+## Copyright and License
 
-Note that if testing via Fake SMTP, then following command will help with debugging:
-```
-$ docker logs fakesmtp
-```
-
-FAQ
----
-Q. Can I change the port from 80 to something else?
-A. Yes, edit the value for your PORT variable in your .env
-
-Q. How can I access the database directly?
-A. Uncomment ports portion of db container under docker-compose.yml
-
-Q. How do I obtain a Open Weather Map API Key?
-A. Follow instructions at [API | Open Weather Map](http://openweathermap.org/api)
-
-Q. How can I see the emails being fake-sent through Fake SMTP?
-A. Use following docker commands e.g.:
-```
-$ docker exec fakesmtp ls /var/mail
-171117095647881.eml
-$ docker exec fakesmtp cat /var/mail/171117095647881.eml
-       Fri, 17 Nov 2017 21:56:47 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Enjoy a discount on us.
-From: fake@fakesmtp
-To: weatherapp+anc@klaviyo.com
-Date: Fri, 17 Nov 2017 21:56:47 -0000
-Message-ID: <20171117215647.40.4184@dcfe6c9251ec>
-
-Current temperature in Anchorage,  Alaska is 72, Sunny.
-```
-
-Contact
--------
-Please contact repo owner for any other questions or concerns.
+Copyright 2017 [Derin Works LLC](http://www.derinworksllc.com)

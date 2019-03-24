@@ -3,12 +3,22 @@ services:
   app:
     container_name: app
     build: .
-    command: python3 /code/manage.py runserver 0.0.0.0:80
+    working_dir: /code
+    command:
+    - /bin/sh
+    - -c
+    - |
+      while ! nc -z db 5432; do sleep 1; done
+      python3 manage.py migrate
+      python3 manage.py runserver 0.0.0.0:80
     volumes:
-      - .:/code
+    - .:/code
     ports:
     - "${PORT}:80"
     environment:
+      SECRET_KEY: ${SECRET}
+      DEBUG: ${DBG}
+      HTTP_HOST: ${HOST}
       DB_HOST: db
       DB_PSWD: ${DB_PSWD}
       DB_USER: ${DB_USER}
@@ -30,7 +40,14 @@ services:
       POSTGRES_PASSWORD: ${DB_PSWD}
 #    ports:
 #      - "5432:5432"
+    volumes:
+    - dbdata:/var/lib/postgresql/data
   fakesmtp:
     container_name: fakesmtp
     image: munkyboy/fakesmtp
+    volumes:
+    - ./maildumps:/var/mail
+
+volumes:
+  dbdata:
 
