@@ -40,11 +40,23 @@ SMTP_USE_TLS=False
   - ```cd ./weather-powered-email```
   - Add a production-ready .env file with production values
   - ```docker-compose up -d```
+  - Create first superuser:
+    ```
+    $ docker exec -it app sh
+    /code # python3 manage.py createsuperuser
+    Username (leave blank to use 'root'):
+    .
+    .
+    .
+    ```
 
 ### Manual End User Testing ###
-Launch your favorite browser and goto
-[here](http://wxmail.derinworksllc.local/app)(refer to PORT from .env
-file if different)
+Please refer to PORT from .env file if you want to run app on a
+different port
+* Launch your favorite browser and goto
+  [here](http://wxmail.derinworksllc.local/) to subscribe
+* Then goto [here](http://wxmail.derinworksllc.local/admin) to send
+  emails
 
 ### Contribution guidelines ###
 
