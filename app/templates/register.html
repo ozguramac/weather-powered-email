@@ -37,6 +37,7 @@
                 </select>
             </div>
 
+            <input type="hidden" id="throttle_token" name="throttle_token">
             <button type="submit" class="btn btn-success btn-lg">Subscribe</button>
         </form>
 
@@ -53,5 +54,15 @@
         {% endif %}
     </div>
 </div>
+
+<script src="https://www.google.com/recaptcha/api.js?render={{ reCAPTCHA_site_key }}"></script>
+<script>
+  grecaptcha.ready(function() {
+      grecaptcha.execute('{{ reCAPTCHA_site_key }}', {action: 'homepage'}).then(function(token) {
+        document.getElementById("throttle_token").value = token;
+      });
+  });
+</script>
+
 </body>
 </html>

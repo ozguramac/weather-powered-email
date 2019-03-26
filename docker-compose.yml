@@ -29,6 +29,8 @@ services:
       EMAIL_USER: ${SMTP_USER}
       EMAIL_PSWD: ${SMTP_PSWD}
       EMAIL_USE_TLS: ${SMTP_USE_TLS}
+      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
+      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
     depends_on:
     - db
   db:

@@ -20,7 +20,7 @@ git clone git@github.com:ozguramac/weather-powered-email.git
 PORT=80
 SECRET=*******************  #<---- GENERATE ONE
 DBG=False  #<----- TURN THIS ON FOR DEV ENV
-HOST=wxmail.derinworksllc.local  #<---- NEED THIS IN PROD
+HOST=wxmail.derinworksllc.local  #<---- SET TO real domain in PROD
 DB_NAME=postgres
 DB_USER=postgres
 DB_PSWD=***************  #<----- SET TO GOOD ONE in PROD
@@ -30,6 +30,8 @@ SMTP_PORT=25
 SMTP_USER=fake
 SMTP_PSWD=
 SMTP_USE_TLS=False
+RECAPTCHA_SECRET_KEY=****************  #<--- FROM google.com/recaptcha
+RECAPTCHA_SITE_KEY=****************  #<--- FROM google.com/recaptcha
 ```
 * How to build: ```docker-compose build```
 * How to run tests: TBD
