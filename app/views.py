@@ -30,6 +30,11 @@ def register(request):
                         r.status_code, throttle_verify['error-codes']))
 
         try:
+            coords = location.split(',')
+            if len(coords) == 2:
+                curLoc = Location.objects.create(city='',state='',latitude=float(coords[0]), longtitude=float(coords[1]))
+                curLoc.save()
+                location = curLoc.id
             user = User.objects.create(email=email, location=location)
             user.save()
             send_wxmail(user)

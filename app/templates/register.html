@@ -62,6 +62,21 @@
         document.getElementById("throttle_token").value = token;
       });
   });
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(curPos) {
+        console.log(curPos);
+        var curPosOpt = document.createElement("option");
+        curPosOpt.text = 'Current Location';
+        curPosOpt.value = curPos.coords.latitude + ',' + curPos.coords.longitude;
+        curPosOpt.selected = 'selected';
+        var locSelect = document.getElementById("location")
+        locSelect.add(curPosOpt, locSelect[0]);
+    });
+  }
+  else {
+    console.log('Geo locate not supported!');
+  }
 </script>
 
 </body>

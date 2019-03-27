@@ -27,6 +27,6 @@ def send_wxmail(user):
         subject = "Not so nice out? That's okay, enjoy a discount on us."
     else:
         subject = "Enjoy a discount on us."
-    message = "Current temperature in {city}, {state} is {temp}, {weather}." \
-        .format(city=loc.city, state=loc.state, temp=temp, weather=weather)
+    message = "Current temperature is {temp} with {weather} at your location {city} {state}.".format(
+        city=loc.city, state=loc.state, temp=temp, weather=weather)
     send_mail(subject, message, from_email, [user.email], fail_silently=False)
